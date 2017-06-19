@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.github.keyilan.swatches</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0+</project_license>
+	<name>Swatches</name>
+	<summary>Colour palate helper</summary>
+	<description>
+		<p>Get colour variations for any of your design projects</p>
+		<ul>
+			<li>Provides different levels of brightness of any colour you enter</li>
+			<li>Quickly copy colour codes to the clipboard for use elsewhere</li>
+		</ul>
+	</description>
+	<provides>
+		<binary>com.github.keyilan.shibu</binary>
+	</provides>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/keyilan/shibu/master/shibu.png?token=ARCVXnnddNrUN-v_Z4n61KDYNf-YT2RIks5ZUJx9wA%3D%3D</image>
+		</screenshot>
+	</screenshots>
+	<developer_name>柯禕藍</developer_name>
+	<url type="homepage">https://github.com/keyilan/</url>
+	<url type="bugtracker">https://github.com/keyilan/swatches/issues</url>
+	<custom>
+		<value key="x-appcenter-color-primary">#ffcb5c</value>
+		<value key="x-appcenter-color-primary-text">#333333</value>
+		<value key="x-appcenter-suggested-price">0</value>
+	</custom>
+</component>
