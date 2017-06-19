@@ -1,4 +1,4 @@
-# ![icon](/data/icons/icon.png?raw=true) Swatches
+# Swatches
 
 Swatches is a utility for getting variations on a colour.
 
