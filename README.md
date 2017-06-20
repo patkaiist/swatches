@@ -6,6 +6,10 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 
 To copy any of the colours to your clipboard, simply click on the desired shade.
 
+## Screenshot
+
+![screenshot](/data/screenshot.png?raw=true)
+
 ## Installation
 
 First, make sure you've instlled the elementary OS SDK
@@ -29,7 +33,3 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr ../
 make
 sudo make install
 ````
-
-## Screenshot
-
-![screenshot](/data/screenshot.png?raw=true)
