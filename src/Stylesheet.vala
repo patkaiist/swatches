@@ -10,7 +10,10 @@ namespace Stylesheet {
 			padding: 8px 0 8px 0;
 		}
 		.container GtkGrid {
-			background: #ffffff;
+			background-color: #ffffff;
+		}
+		.container GtkBox {
+			background-color: #ffffff;
 		}
 		""";
 }

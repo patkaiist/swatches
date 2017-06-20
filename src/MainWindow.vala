@@ -22,7 +22,7 @@ public class MainWindow : Gtk.Window {
 		public Gtk.Clipboard clipboard = Gtk.Clipboard.get_for_display (Gdk.Display.get_default (), Gdk.SELECTION_CLIPBOARD);
 		public MainWindow (Gtk.Application application) {
 			GLib.Object (application: application,
-				//icon_name: "com.github.keyilan.swatches",
+				icon_name: "com.github.keyilan.swatches",
 				resizable: false,
 				title: "Swatches",
 				height_request: 500,
@@ -61,8 +61,8 @@ public class MainWindow : Gtk.Window {
 
 			Gtk.Box innerbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 			Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-			innerbox.pack_start (input, true, true, 8);
-			outerbox.pack_start (innerbox, true, true, 8);
+			innerbox.pack_start (input, true, true, 6);
+			outerbox.pack_start (innerbox, true, true, 6);
 			//box.get_style_context ().add_class ("padded");
 			parentgrid.attach(outerbox, 0, 0, 1, 1);
 			parentgrid.attach(grid, 0, 1, 1, 1);
