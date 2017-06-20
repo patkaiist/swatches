@@ -16,6 +16,10 @@ PERFORMANCE OF THIS SOFTWARE.
 */
 using Gtk;
 using Gdk;
+using Granite;
+using Granite.Services;
+using Granite.Widgets;
+
 public class MainWindow : Gtk.Window {
 		private string hexValue = "000000";
 		private double steps = 16; // how many steps to display
@@ -39,24 +43,14 @@ public class MainWindow : Gtk.Window {
 		}
 		construct {
 			Gtk.Entry input = new Gtk.Entry();
-			Gtk.Entry perception = new Gtk.Entry();
-			Gtk.Entry val = new Gtk.Entry(); // luminence
-			Gtk.Entry stepsdownentry = new Gtk.Entry();
-			Gtk.Entry stepsupentry = new Gtk.Entry();
 			Gtk.Button[] buttons = new Gtk.Button[stepsint];
 			var rows = new Gtk.Box[stepsint];
 			var grids = new Gtk.Grid[stepsint];
 			Gtk.Button[] brights = new Gtk.Button[stepsint];
-			Gtk.Label inputlabel = new Gtk.Label ("input");
-			Gtk.Label stepslabel = new Gtk.Label ("steps");
-			Gtk.Label vallabel = new Gtk.Label ("luminance");
-			Gtk.Label percep = new Gtk.Label ("percieved");
 			Gtk.Grid parentgrid = new Gtk.Grid();
 			Gtk.Grid grid = new Gtk.Grid();
-			//grid.set_row_homogeneous(true);
 			grid.set_column_homogeneous(true);
 			parentgrid.set_column_homogeneous(true);
-			//parentgrid.set_row_homogeneous(false);
 			parentgrid.set_row_spacing(0);
 			grid.set_row_spacing(0);
 			grid.set_column_spacing(0);
@@ -65,13 +59,10 @@ public class MainWindow : Gtk.Window {
 			Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 			innerbox.pack_start (input, true, true, 6);
 			outerbox.pack_start (innerbox, true, true, 6);
-			//box.get_style_context ().add_class ("padded");
 			parentgrid.attach(outerbox, 0, 0, 1, 1);
 			parentgrid.attach(grid, 0, 1, 1, 1);
 			this.add (parentgrid);
-
 			parentgrid.get_style_context ().add_class ("container");
-			//input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
 			input.set_placeholder_text("enter hex code");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
 			input.icon_press.connect ((pos, event) => {
@@ -111,11 +102,11 @@ public class MainWindow : Gtk.Window {
 					double redval = hex2rgb(hexValue.substring (0, 2));
 					double greenval = hex2rgb(hexValue.substring (2, 2));
 					double blueval = hex2rgb(hexValue.substring (4, 2));
-					double lumval = (double)((redval + blueval + greenval)/3);
-					double per = (0.299*redval + 0.587*greenval + 0.114*blueval);
-					double lumpos = steps - Math.round((lumval/256)*steps); // <-- actual luminance
-					//double lumpos = steps - Math.round((per/256)*steps); // <-- percieved luminance. make togglable later
-					int positionkey = (int)lumpos;
+					double luminancevalue = (double)((redval + blueval + greenval)/3);
+					double perceptual = (0.299*redval + 0.587*greenval + 0.114*blueval);
+					//double luminance = steps - Math.round((luminancevalue/256)*steps); // <-- actual luminance
+					double luminance = steps - Math.round((perceptual/256)*steps); // <-- percieved luminance. make togglable later
+					int positionkey = (int)luminance;
 
 					// calculate bright steps
 					double rangemin = Math.fmin (redval, greenval);
