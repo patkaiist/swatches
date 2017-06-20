@@ -8,9 +8,22 @@ To copy any of the colours to your clipboard, simply click on the desired shade.
 
 ## Installation
 
+First, make sure you've instlled the elementary OS SDK
+
+````
+sudo apt install elementary-sdk
+````
+
+Clone the repository
+
 ````
 git clone https://github.com/keyilan/swatches
 cd swatches
+````
+
+Build and install
+
+````
 mkdir build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr ../
 make

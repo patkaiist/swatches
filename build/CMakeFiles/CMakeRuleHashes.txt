@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+546203cb9080d9bafe022b1c7b556ff3 com.github.keyilan.swatches_valac.stamp
+d5e6de06445d92d125acc7dd6bdca078 src/Application.c
