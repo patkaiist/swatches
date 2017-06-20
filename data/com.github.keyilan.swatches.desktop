@@ -8,7 +8,7 @@ Icon=com.github.keyilan.swatches
 Terminal=false
 Type=Application
 X-GNOME-Gettext-Domain=com.github.keyilan.swatches
-X-GNOME-UsesNotifications=false
+X-GNOME-UsesNotifications=true
 Keywords=design;color;colour;palette;swatch;
 Actions=About;
 

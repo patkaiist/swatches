@@ -1,4 +1,5 @@
 /*
+License: ISC
 Copyright (c) 2017, 柯禕藍 <yhilan.ko@gmail.com>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
@@ -68,6 +69,7 @@ public class MainWindow : Gtk.Window {
 			parentgrid.attach(outerbox, 0, 0, 1, 1);
 			parentgrid.attach(grid, 0, 1, 1, 1);
 			this.add (parentgrid);
+
 			parentgrid.get_style_context ().add_class ("container");
 			//input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
 			input.set_placeholder_text("enter hex code");
@@ -77,6 +79,7 @@ public class MainWindow : Gtk.Window {
 					input.set_text ("");
 				}
 			});
+
 			for (int i = 0; i < stepsint; i++) {
 				rows[i] = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 				grids[i] = new Gtk.Grid();
@@ -91,6 +94,7 @@ public class MainWindow : Gtk.Window {
 				rows[i].pack_start (grids[i], true, true, 0);
 				grid.attach(rows[i], 0, i, 1, 1);
 			}
+
 			input.changed.connect (() => {
 				hexValue = input.get_text();
 				hexValue = hexValue.replace (" ", "");
@@ -222,7 +226,6 @@ public class MainWindow : Gtk.Window {
 						}
 						o++;
 					}
-
 					// set for the given colour's buttons
 					ApplyCSS({buttons[positionkey]}, @"*{background-color:"+original+";}");
 					ApplyCSS({brights[positionkey]}, @"*{background-color:"+original+";}");
@@ -242,8 +245,8 @@ public class MainWindow : Gtk.Window {
 					}
 				}
 			});
-			input.text = "1B90CE";
-			input.text = "#1B90CE";
+			input.text = "3F51B5";
+			input.text = "#3F51B5";
 		}
 		public void button_clicked (Gtk.Button button) {
 			ApplyCSS({button}, @"*{font-weight:bold;}");
@@ -252,6 +255,9 @@ public class MainWindow : Gtk.Window {
 		}
 		public void CopyToClipboard(string hex) {
 			clipboard.set_text (hex, hex.length);
+			var notification = new Notification (_(hex));
+			notification.set_body (_("copied to clipboard"));
+			GLib.Application.get_default ().send_notification ("copied", notification);
 		}
 		public void ApplyCSS (Widget[] widgets, string CSS) {
 			var Provider = new Gtk.CssProvider ();
