@@ -43,6 +43,8 @@ public class MainWindow : Gtk.Window {
 			Gtk.Entry stepsdownentry = new Gtk.Entry();
 			Gtk.Entry stepsupentry = new Gtk.Entry();
 			Gtk.Button[] buttons = new Gtk.Button[stepsint];
+			var rows = new Gtk.Box[stepsint];
+			var grids = new Gtk.Grid[stepsint];
 			Gtk.Button[] brights = new Gtk.Button[stepsint];
 			Gtk.Label inputlabel = new Gtk.Label ("input");
 			Gtk.Label stepslabel = new Gtk.Label ("steps");
@@ -58,7 +60,6 @@ public class MainWindow : Gtk.Window {
 			grid.set_row_spacing(0);
 			grid.set_column_spacing(0);
 
-
 			Gtk.Box innerbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 			Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 			innerbox.pack_start (input, true, true, 6);
@@ -70,12 +71,18 @@ public class MainWindow : Gtk.Window {
 			parentgrid.get_style_context ().add_class ("container");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
 			for (int i = 0; i < stepsint; i++) {
+				rows[i] = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+				grids[i] = new Gtk.Grid();
+				grids[i].set_column_homogeneous(true);
 				buttons[i] = new Gtk.Button.with_label ("");
 				buttons[i].clicked.connect (button_clicked);
-				grid.attach(buttons[i], 0, i, 1, 1);
 				brights[i] = new Gtk.Button.with_label ("");
 				brights[i].clicked.connect (button_clicked);
-				grid.attach(brights[i], 1, i, 1, 1);
+				grids[i].attach (buttons[i], 0, 0, 1, 1);
+				grids[i].attach (brights[i], 1, 0, 1, 1);
+				//grid.attach(brights[i], 1, i, 1, 1);
+				rows[i].pack_start (grids[i], true, true, 0);
+				grid.attach(rows[i], 0, i, 1, 1);
 			}
 			input.changed.connect (() => {
 				hexValue = input.get_text();
@@ -118,6 +125,8 @@ public class MainWindow : Gtk.Window {
 					for (int i = 0; i < stepsint; i++) {
 						buttons[i].set_label("");
 						brights[i].set_label("");
+						rows[i].get_style_context ().remove_class ("shadow");
+						rows[i].get_style_context ().remove_class ("preshadow");
 					}
 
 					// everything above the given colour
@@ -166,7 +175,6 @@ public class MainWindow : Gtk.Window {
 
 					// everything below the given colour
 					for (int i = positionkey + 1; i < stepsint; i++) {
-
 						// regular
 						double redstep = Math.round(redval / (steps - positionkey));
 						double newred = redval - (redstep * o);
@@ -212,16 +220,19 @@ public class MainWindow : Gtk.Window {
 					ApplyCSS({buttons[positionkey]}, @"*{background-color:"+original+";}");
 					ApplyCSS({brights[positionkey]}, @"*{background-color:"+original+";}");
 					if (positionkey >= steps/2) {
-						ApplyCSS({buttons[positionkey]}, @"*{color:#ffffff;}");
-						ApplyCSS({brights[positionkey]}, @"*{color:#ffffff;}");
+						ApplyCSS({buttons[positionkey]}, @"*{color:#fafafa;}");
+						ApplyCSS({brights[positionkey]}, @"*{color:#fafafa;}");
 					} else {
-						ApplyCSS({buttons[positionkey]}, @"*{color:#000000;}");
-						ApplyCSS({brights[positionkey]}, @"*{color:#000000;}");
+						ApplyCSS({buttons[positionkey]}, @"*{color:#222222;}");
+						ApplyCSS({brights[positionkey]}, @"*{color:#222222;}");
 					}
 					buttons[positionkey].set_label(original);
 					brights[positionkey].set_label(original);
-					ApplyCSS({buttons[positionkey]}, @"*{font-weight:normal;}");
-					ApplyCSS({brights[positionkey]}, @"*{font-weight:normal;}");
+					rows[positionkey].get_style_context().add_class("shadow");
+					int r = positionkey-1;
+					if (r >= 0) {
+						rows[r].get_style_context().add_class("preshadow");
+					}
 				}
 			});
 			input.text = "1B90CE";
