@@ -9,5 +9,8 @@ namespace Stylesheet {
 			box-shadow: none;
 			padding: 8px 0 8px 0;
 		}
+		.container GtkGrid {
+			background: #ffffff;
+		}
 		""";
 }

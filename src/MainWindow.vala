@@ -23,11 +23,11 @@ public class MainWindow : Gtk.Window {
 		public MainWindow (Gtk.Application application) {
 			GLib.Object (application: application,
 				//icon_name: "com.github.keyilan.swatches",
-				resizable: true,
+				resizable: false,
 				title: "Swatches",
 				height_request: 500,
 				width_request: 500,
-				border_width: 8
+				border_width: 0
 			);
 			Granite.Widgets.Utils.set_theming_for_screen (
 				this.get_screen (),
@@ -50,15 +50,22 @@ public class MainWindow : Gtk.Window {
 			Gtk.Label percep = new Gtk.Label ("percieved");
 			Gtk.Grid parentgrid = new Gtk.Grid();
 			Gtk.Grid grid = new Gtk.Grid();
-			grid.set_row_homogeneous(true);
+			//grid.set_row_homogeneous(true);
 			grid.set_column_homogeneous(true);
 			parentgrid.set_column_homogeneous(true);
-			parentgrid.set_row_homogeneous(false);
-			parentgrid.set_row_spacing(8);
+			//parentgrid.set_row_homogeneous(false);
+			parentgrid.set_row_spacing(0);
 			grid.set_row_spacing(0);
 			grid.set_column_spacing(0);
-			parentgrid.attach(input, 0, 0, 1, 1);
-			parentgrid.attach(grid, 0, 2, 1, 1);
+
+
+			Gtk.Box innerbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+			Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+			innerbox.pack_start (input, true, true, 8);
+			outerbox.pack_start (innerbox, true, true, 8);
+			//box.get_style_context ().add_class ("padded");
+			parentgrid.attach(outerbox, 0, 0, 1, 1);
+			parentgrid.attach(grid, 0, 1, 1, 1);
 			this.add (parentgrid);
 			parentgrid.get_style_context ().add_class ("container");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
