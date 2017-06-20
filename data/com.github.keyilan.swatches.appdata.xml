@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.github.keyilan.swatches</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0+</project_license>
+	<name>Swatches</name>
+	<summary>Colour variation tool</summary>
+	<description>
+		<p>Swatches lets you quickly grab variations of any hexadecimal colour you enter. Copy any shade to the clipboard with the click of a button.</p>
+	</description>
+	<provides>
+		<binary>com.github.keyilan.shibu</binary>
+	</provides>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/keyilan/swatches/master/screenshot.png</image>
+		</screenshot>
+	</screenshots>
+	<developer_name>柯禕藍</developer_name>
+	<url type="homepage">https://github.com/keyilan/</url>
+	<url type="bugtracker">https://github.com/keyilan/swatches/issues</url>
+	<custom>
+		<value key="x-appcenter-color-primary">#ffcb5c</value>
+		<value key="x-appcenter-color-primary-text">#333333</value>
+		<value key="x-appcenter-suggested-price">0</value>
+	</custom>
+</component>
