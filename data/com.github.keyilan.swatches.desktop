@@ -9,7 +9,7 @@ Terminal=false
 Type=Application
 X-GNOME-Gettext-Domain=com.github.keyilan.swatches
 X-GNOME-UsesNotifications=false
-Keywords=design;color;colour;palate;swatch;
+Keywords=design;color;colour;palette;swatch;
 Actions=About;
 
 [Desktop Action About]
