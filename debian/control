@@ -1,0 +1,15 @@
+Source: swatches
+Section: x11
+Priority: extra
+Maintainer: 柯禕藍 <yhilan.ko@gmail.com>
+Build-Depends: cmake (>= 2.8),
+               debhelper (>= 9),
+               libgtk-3-dev,
+               valac (>= 0.16)
+Standards-Version: 3.9.3
+
+Package: com.github.keyilan.swatches
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Colour utility
+ Swatches is a colour palette utility for getting variations.
