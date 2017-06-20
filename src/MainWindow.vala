@@ -34,7 +34,6 @@ public class MainWindow : Gtk.Window {
 				Stylesheet.BODY,
 				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 			);
-			this.get_style_context ().add_class ("rounded");
 			this.window_position = Gtk.WindowPosition.CENTER;
 		}
 		construct {
@@ -49,21 +48,27 @@ public class MainWindow : Gtk.Window {
 			Gtk.Label stepslabel = new Gtk.Label ("steps");
 			Gtk.Label vallabel = new Gtk.Label ("luminance");
 			Gtk.Label percep = new Gtk.Label ("percieved");
+			Gtk.Grid parentgrid = new Gtk.Grid();
 			Gtk.Grid grid = new Gtk.Grid();
 			grid.set_row_homogeneous(true);
 			grid.set_column_homogeneous(true);
+			parentgrid.set_column_homogeneous(true);
+			parentgrid.set_row_homogeneous(false);
+			parentgrid.set_row_spacing(8);
 			grid.set_row_spacing(0);
-			grid.set_column_spacing(4);
-			this.add (grid);
-			grid.attach(input, 0, 0, 2, 1);
+			grid.set_column_spacing(0);
+			parentgrid.attach(input, 0, 0, 1, 1);
+			parentgrid.attach(grid, 0, 2, 1, 1);
+			this.add (parentgrid);
+			parentgrid.get_style_context ().add_class ("container");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
 			for (int i = 0; i < stepsint; i++) {
 				buttons[i] = new Gtk.Button.with_label ("");
 				buttons[i].clicked.connect (button_clicked);
-				grid.attach(buttons[i], 0, i+1, 1, 1);
+				grid.attach(buttons[i], 0, i, 1, 1);
 				brights[i] = new Gtk.Button.with_label ("");
 				brights[i].clicked.connect (button_clicked);
-				grid.attach(brights[i], 1, i+1, 1, 1);
+				grid.attach(brights[i], 1, i, 1, 1);
 			}
 			input.changed.connect (() => {
 				hexValue = input.get_text();
@@ -86,6 +91,7 @@ public class MainWindow : Gtk.Window {
 					double lumpos = steps - Math.round((lumval/256)*steps); // <-- actual luminance
 					//double lumpos = steps - Math.round((per/256)*steps); // <-- percieved luminance. make togglable later
 					int positionkey = (int)lumpos;
+
 					// calculate bright steps
 					double rangemin = Math.fmin (redval, greenval);
 						rangemin = Math.fmin (rangemin, blueval);
@@ -100,11 +106,13 @@ public class MainWindow : Gtk.Window {
 					string originalrgb = "rgb("+redval.to_string()+","+greenval.to_string()+","+blueval.to_string()+")";
 					string original = rgb2hex(originalrgb);
 					int o = 1;
+
 					// clear all labels
 					for (int i = 0; i < stepsint; i++) {
 						buttons[i].set_label("");
 						brights[i].set_label("");
 					}
+
 					// everything above the given colour
 					for (int i = positionkey - 1; i >= 0; i--) {
 						double redstep = Math.round((255 - redval) / positionkey);
@@ -126,6 +134,7 @@ public class MainWindow : Gtk.Window {
 						} else {
 							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
 						}
+
 						// brights
 						double brightred = redval + (brightuppersteps * o);
 						double brightgreen = greenval + (brightuppersteps * o);
@@ -145,9 +154,12 @@ public class MainWindow : Gtk.Window {
 						}
 						o++;
 					}
+
 					o = 1; // reset
+
 					// everything below the given colour
 					for (int i = positionkey + 1; i < stepsint; i++) {
+
 						// regular
 						double redstep = Math.round(redval / (steps - positionkey));
 						double newred = redval - (redstep * o);
@@ -168,6 +180,7 @@ public class MainWindow : Gtk.Window {
 						} else {
 							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
 						}
+
 						// brights
 						double brightred = redval - (brightlowersteps * o);
 						double brightgreen = greenval - (brightlowersteps * o);
@@ -187,6 +200,7 @@ public class MainWindow : Gtk.Window {
 						}
 						o++;
 					}
+
 					// set for the given colour's buttons
 					ApplyCSS({buttons[positionkey]}, @"*{background-color:"+original+";}");
 					ApplyCSS({brights[positionkey]}, @"*{background-color:"+original+";}");
@@ -203,8 +217,8 @@ public class MainWindow : Gtk.Window {
 					ApplyCSS({brights[positionkey]}, @"*{font-weight:normal;}");
 				}
 			});
-			input.text = "ffcb5c";
-			input.text = "#ffcb5c";
+			input.text = "1B90CE";
+			input.text = "#1B90CE";
 		}
 		public void button_clicked (Gtk.Button button) {
 			ApplyCSS({button}, @"*{font-weight:bold;}");
