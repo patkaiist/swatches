@@ -50,6 +50,7 @@ install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/com.github.keyilan.swat
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/48x48/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/64x64/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/128/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/128x128/apps)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.keyilan.swatches.appdata.xml DESTINATION ${DATADIR}/metainfo/)
 
 include (GSettings)
 add_schema ("data/com.github.keyilan.swatches.gschema.xml")
