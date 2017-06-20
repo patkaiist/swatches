@@ -70,6 +70,13 @@ public class MainWindow : Gtk.Window {
 			this.add (parentgrid);
 			parentgrid.get_style_context ().add_class ("container");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
+			input.set_placeholder_text("enter hex code");
+			input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
+			input.icon_press.connect ((pos, event) => {
+				if (pos == Gtk.EntryIconPosition.SECONDARY) {
+					input.set_text ("");
+				}
+			});
 			for (int i = 0; i < stepsint; i++) {
 				rows[i] = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 				grids[i] = new Gtk.Grid();
