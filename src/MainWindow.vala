@@ -15,18 +15,11 @@ PERFORMANCE OF THIS SOFTWARE.
 */
 using Gtk;
 using Gdk;
-
-//valac --pkg gtk+-3.0 --pkg glib-2.0 --pkg granite -X -lm Application.vala MainWindow.vala Stylesheet.vala && ./Applicationcd ..
-
 public class MainWindow : Gtk.Window {
-		//8932f7 // ff1364 // problem colours
-		//private string hexval; // globals go here
-		private string hexValue = "000000"; // the value of the colour that just changed
-		//private int lumValue = 0; // where in the list does it fall
+		private string hexValue = "000000";
 		private double steps = 16; // how many steps to display
 		private int stepsint = 16;
 		public Gtk.Clipboard clipboard = Gtk.Clipboard.get_for_display (Gdk.Display.get_default (), Gdk.SELECTION_CLIPBOARD);
-
 		public MainWindow (Gtk.Application application) {
 			GLib.Object (application: application,
 				//icon_name: "com.github.keyilan.swatches",
@@ -43,7 +36,6 @@ public class MainWindow : Gtk.Window {
 			);
 			this.get_style_context ().add_class ("rounded");
 			this.window_position = Gtk.WindowPosition.CENTER;
-			//var icon = new Gtk.Image.from_icon_name ("com.github.lainsce.coin-symbolic", Gtk.IconSize.DIALOG);
 		}
 		construct {
 			Gtk.Entry input = new Gtk.Entry();
@@ -57,34 +49,14 @@ public class MainWindow : Gtk.Window {
 			Gtk.Label stepslabel = new Gtk.Label ("steps");
 			Gtk.Label vallabel = new Gtk.Label ("luminance");
 			Gtk.Label percep = new Gtk.Label ("percieved");
-
 			Gtk.Grid grid = new Gtk.Grid();
 			grid.set_row_homogeneous(true);
 			grid.set_column_homogeneous(true);
 			grid.set_row_spacing(0);
 			grid.set_column_spacing(4);
 			this.add (grid);
-
-			//grid.attach(inputlabel, 0, 0, 1, 1);
 			grid.attach(input, 0, 0, 2, 1);
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
-
-			/*Gtk.Toolbar bar = new Gtk.Toolbar ();
-			Gtk.Image img = new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.SMALL_TOOLBAR);
-			Gtk.ToolButton button1 = new Gtk.ToolButton (img, null);
-			button1.clicked.connect (() => {
-				stdout.printf ("Button 1\n");
-			});
-			bar.add (button1);
-			grid.attach (bar,0,0,2,1);*/
-
-			//grid.attach(stepslabel, 0, 6, 1, 1);
-			//grid.attach(stepsupentry, 0, 7, 1, 1);
-			//grid.attach(stepsdownentry, 0, 8, 1, 1);
-			//grid.attach(vallabel, 0, 9, 1, 1);
-			//grid.attach(val, 0, 10, 1, 1);
-			//grid.attach(percep, 0, 11, 1, 1);
-			//grid.attach(perception, 0, 12, 1, 1);
 			for (int i = 0; i < stepsint; i++) {
 				buttons[i] = new Gtk.Button.with_label ("");
 				buttons[i].clicked.connect (button_clicked);
@@ -106,46 +78,19 @@ public class MainWindow : Gtk.Window {
 					input.text = hexValue;
 				}
 				if (hexValue.length == 6) {
-					// to RGB
 					double redval = hex2rgb(hexValue.substring (0, 2));
 					double greenval = hex2rgb(hexValue.substring (2, 2));
 					double blueval = hex2rgb(hexValue.substring (4, 2));
-
 					double lumval = (double)((redval + blueval + greenval)/3);
 					double per = (0.299*redval + 0.587*greenval + 0.114*blueval);
-					//perception.set_text(Math.round(per).to_string());
 					double lumpos = steps - Math.round((lumval/256)*steps); // <-- actual luminance
-					//double lumpos = steps - Math.round((per/256)*steps); // <-- percieved luminance
+					//double lumpos = steps - Math.round((per/256)*steps); // <-- percieved luminance. make togglable later
 					int positionkey = (int)lumpos;
-					//val.set_text(Math.round(lumval).to_string()); //9cd039
-					//for (int e = 0; e < stepsint; e++) {
-						//labels[e].set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, null);
-					//}
-
 					// calculate bright steps
-					double rangemin;
-					double rangemax;
-					if (redval < greenval) {
-						rangemin = redval;
-					} else {
-						rangemin = greenval;
-					}
-					if (rangemin > blueval) {
-						rangemin = blueval;
-					}
-					if (redval > greenval) {
-						rangemax = redval;
-					} else {
-						rangemin = greenval;
-					}
-					if (rangemax < blueval) {
-						rangemax = blueval;
-					}
-
-					//double rangemin = Math.fmin (redval, greenval);
-					//	rangemin = Math.fmin (rangemin, blueval);
-					//double rangemax = Math.fmax (redval, greenval);
-					//	rangemax = Math.fmax (rangemax, blueval);
+					double rangemin = Math.fmin (redval, greenval);
+						rangemin = Math.fmin (rangemin, blueval);
+					double rangemax = Math.fmax (redval, greenval);
+						rangemax = Math.fmax (rangemax, blueval);
 					double upperval = (255 - rangemin); // the distance from 255 to highest rgb value
 					double lowerval = rangemax; // the distance from 0 to the lowest value
 					double brightlower = stepsint - positionkey;
@@ -155,83 +100,94 @@ public class MainWindow : Gtk.Window {
 					string originalrgb = "rgb("+redval.to_string()+","+greenval.to_string()+","+blueval.to_string()+")";
 					string original = rgb2hex(originalrgb);
 					int o = 1;
+					// clear all labels
 					for (int i = 0; i < stepsint; i++) {
 						buttons[i].set_label("");
 						brights[i].set_label("");
 					}
+					// everything above the given colour
 					for (int i = positionkey - 1; i >= 0; i--) {
 						double redstep = Math.round((255 - redval) / positionkey);
-						//stepsupentry.set_text(redstep.to_string());
 						double newred = redval + (redstep * o);
-						double brightred = redval + (brightuppersteps * o);
-						if (newred > 255) {newred = 255;}
-						if (brightred > 255) {brightred = 255;}
 						double greenstep = Math.round((255 - greenval) / positionkey);
 						double newgreen = greenval + (greenstep * o);
-						double brightgreen = greenval + (brightuppersteps * o);
-						if (newgreen > 255) {newgreen = 255;}
-						if (brightgreen > 255) {brightgreen = 255;}
 						double bluestep = Math.round((255 - blueval) / positionkey);
 						double newblue = blueval + (bluestep * o);
-						double brightblue = blueval + (brightuppersteps * o);
+						if (newred > 255) {newred = 255;}
+						if (newgreen > 255) {newgreen = 255;}
 						if (newblue > 255) {newblue = 255;};
+						string thisrgb  = "rgb("+newred.to_string()+","+newgreen.to_string()+","+newblue.to_string()+")";
+						string thishex  = rgb2hex(thisrgb);
+						buttons[i].set_label(thishex);
+						ApplyCSS({buttons[i]}, @"*{background-color:"+thishex+";}");
+						ApplyCSS({buttons[i]}, @"*{font-weight:normal;}");
+						if (i > steps/2) {
+							ApplyCSS({buttons[i]}, @"*{color:#fafafa;}");
+						} else {
+							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
+						}
+						// brights
+						double brightred = redval + (brightuppersteps * o);
+						double brightgreen = greenval + (brightuppersteps * o);
+						double brightblue = blueval + (brightuppersteps * o);
+						if (brightred > 255) {brightred = 255;}
+						if (brightgreen > 255) {brightgreen = 255;}
 						if (brightblue > 255) {brightblue = 255;};
-						string thisrgb  = "rgb("+newred.to_string()+","+newgreen.to_string()+","+newblue.to_string()+")";
 						string brightrgb  = "rgb("+brightred.to_string()+","+brightgreen.to_string()+","+brightblue.to_string()+")";
-						string thishex  = rgb2hex(thisrgb);
 						string brighthex  = rgb2hex(brightrgb);
-						o++;
-						ApplyCSS({buttons[i]}, @"*{background-color:"+thishex+";}");
-						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
-						if (i > steps/2) {
-							ApplyCSS({buttons[i]}, @"*{color:#ffffff;}");
-							ApplyCSS({brights[i]}, @"*{color:#ffffff;}");
-						} else {
-							ApplyCSS({buttons[i]}, @"*{color:#000000;}");
-							ApplyCSS({brights[i]}, @"*{color:#000000;}");
-						}
-						ApplyCSS({buttons[i]}, @"*{font-weight:normal;}");
-						ApplyCSS({brights[i]}, @"*{font-weight:normal;}");
-						buttons[i].set_label(thishex);
 						brights[i].set_label(brighthex);
+						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
+						ApplyCSS({brights[i]}, @"*{font-weight:normal;}");
+						if (i > steps/2) {
+							ApplyCSS({brights[i]}, @"*{color:#fafafa;}");
+						} else {
+								ApplyCSS({brights[i]}, @"*{color:#222222;}");
+						}
+						o++;
 					}
-					o = 1;
+					o = 1; // reset
+					// everything below the given colour
 					for (int i = positionkey + 1; i < stepsint; i++) {
-						double redstep = Math.round(redval / (steps-positionkey));
-						//stepsdownentry.set_text(redstep.to_string());
+						// regular
+						double redstep = Math.round(redval / (steps - positionkey));
 						double newred = redval - (redstep * o);
-						double brightred = redval - (brightlowersteps * o);
-						if (newred < 0) {newred = 0;}
-						if (brightred < 0) {brightred = 0;}
-						double greenstep = Math.round(greenval / (steps-positionkey));
+						double greenstep = Math.round(greenval / (steps - positionkey));
 						double newgreen = greenval - (greenstep * o);
-						double brightgreen = greenval - (brightlowersteps * o);
-						if (newgreen < 0) {newgreen = 0;}
-						if (brightgreen < 0) {brightgreen = 0;}
-						double bluestep = Math.round(blueval / (steps-positionkey));
+						double bluestep = Math.round(blueval / (steps - positionkey));
 						double newblue = blueval - (bluestep * o);
-						double brightblue = blueval - (brightlowersteps * o);
+						if (newred < 0) {newred = 0;}
+						if (newgreen < 0) {newgreen = 0;}
 						if (newblue < 0) {newblue = 0;};
-						if (brightblue < 0) {brightblue = 0;};
 						string thisrgb  = "rgb("+newred.to_string()+","+newgreen.to_string()+","+newblue.to_string()+")";
-						string brightrgb  = "rgb("+brightred.to_string()+","+brightgreen.to_string()+","+brightblue.to_string()+")";
 						string thishex  = rgb2hex(thisrgb);
-						string brighthex  = rgb2hex(brightrgb);
-						o++;
-						ApplyCSS({buttons[i]}, @"*{background-color:"+thishex+";}");
-						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
-						if (i > steps/2) {
-							ApplyCSS({buttons[i]}, @"*{color:#ffffff;}");
-							ApplyCSS({brights[i]}, @"*{color:#ffffff;}");
-						} else {
-							ApplyCSS({buttons[i]}, @"*{color:#000000;}");
-								ApplyCSS({brights[i]}, @"*{color:#000000;}");
-						}
 						buttons[i].set_label(thishex);
-						brights[i].set_label(brighthex);
+						ApplyCSS({buttons[i]}, @"*{background-color:"+thishex+";}");
 						ApplyCSS({buttons[i]}, @"*{font-weight:normal;}");
+						if (i > steps/2) {
+							ApplyCSS({buttons[i]}, @"*{color:#fafafa;}");
+						} else {
+							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
+						}
+						// brights
+						double brightred = redval - (brightlowersteps * o);
+						double brightgreen = greenval - (brightlowersteps * o);
+						double brightblue = blueval - (brightlowersteps * o);
+						if (brightred < 0) {brightred = 0;}
+						if (brightgreen < 0) {brightgreen = 0;}
+						if (brightblue < 0) {brightblue = 0;};
+						string brightrgb  = "rgb("+brightred.to_string()+","+brightgreen.to_string()+","+brightblue.to_string()+")";
+						string brighthex  = rgb2hex(brightrgb);
+						brights[i].set_label(brighthex);
+						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
 						ApplyCSS({brights[i]}, @"*{font-weight:normal;}");
+						if (i > steps/2) {
+							ApplyCSS({brights[i]}, @"*{color:#fafafa;}");
+						} else {
+								ApplyCSS({brights[i]}, @"*{color:#222222;}");
+						}
+						o++;
 					}
+					// set for the given colour's buttons
 					ApplyCSS({buttons[positionkey]}, @"*{background-color:"+original+";}");
 					ApplyCSS({brights[positionkey]}, @"*{background-color:"+original+";}");
 					if (positionkey >= steps/2) {
