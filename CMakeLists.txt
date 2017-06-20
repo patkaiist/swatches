@@ -46,7 +46,6 @@ target_link_libraries(com.github.keyilan.swatches m)
 
 install (TARGETS ${EXEC_NAME} RUNTIME DESTINATION bin)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.keyilan.swatches.desktop DESTINATION ${DATADIR}/applications/)
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/data/com.github.keyilan.swatches.svg" DESTINATION ${DATADIR}/pixmaps/)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/32/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/32x32/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/48/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/48x48/apps)
 install (FILES ${CMAKE_CURRENT_SOURCE_DIR}/data/icons/64/com.github.keyilan.swatches.svg DESTINATION share/icons/hicolor/64x64/apps)

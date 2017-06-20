@@ -69,7 +69,7 @@ public class MainWindow : Gtk.Window {
 			parentgrid.attach(grid, 0, 1, 1, 1);
 			this.add (parentgrid);
 			parentgrid.get_style_context ().add_class ("container");
-			input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
+			//input.set_icon_from_icon_name (Gtk.EntryIconPosition.PRIMARY, "preferences-desktop-theme");
 			input.set_placeholder_text("enter hex code");
 			input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
 			input.icon_press.connect ((pos, event) => {
