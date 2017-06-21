@@ -40,6 +40,7 @@ public class MainWindow : Gtk.Window {
 				Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 			);
 			this.window_position = Gtk.WindowPosition.CENTER;
+			Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
 		}
 		construct {
 			Gtk.Entry input = new Gtk.Entry();
