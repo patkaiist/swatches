@@ -11,7 +11,7 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 * Remembers your preference for hex or rgb between uses
 * Remembers the last colour you checked when reloading the app
 
-## Screenshot2
+## Screenshots
 
 ![screenshot](/data/notifications.png?raw=true)
 
