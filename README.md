@@ -8,6 +8,8 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 
 * One-click copying from any of the colour swatches
 * Quickly switch between RGB and hexadecimal colour values
+* Remembers your preference for hex or rgb between uses
+* Remembers the last colour you checked when reloading the app
 
 ## Screenshot
 
@@ -38,5 +40,3 @@ sudo make install
 ````
 
 ## To do
-* Set to temember the last colour on load
-* Uer-toggleable luminance calculation (perceptual versus actual)
