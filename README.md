@@ -40,3 +40,5 @@ sudo make install
 ````
 
 ## To do
+* User-controllable luminence normalisation
+* User-defined number of steps to show
