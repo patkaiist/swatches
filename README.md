@@ -33,3 +33,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr ../
 make
 sudo make install
 ````
+
+## To do
+* add option to toggle beweeen rgb and hex
+* remember the last colour on load
