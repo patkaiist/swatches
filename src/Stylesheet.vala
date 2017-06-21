@@ -43,5 +43,10 @@ namespace Stylesheet {
 		GtkBox.preshadow GtkButton {
 			border-bottom: 1px solid rgba(0,0,0,0.15);
 		}
+		GtkSwitch.trough:active {
+			background-color: alpha (#000, 0.1);
+			background-image: none;
+			border: 1px solid alpha (#000, 0.25);
+		}
 		""";
 }
