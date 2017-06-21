@@ -22,20 +22,22 @@ using Granite.Services;
 using Granite.Widgets;
 
 public class MainWindow : Gtk.Window {
+	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
 	private string hexValue = "000000";
 	private double steps = 16; // how many steps to display
 	private int stepsint = 16;
 	private string originalColour = "";
-	private bool showrgb = false;
+	private string initialColor;
+	private bool showrgb;
 	private bool onChangeActivated = true;
+    private int window_x = 0;
+    private int window_y = 0;
 	public Gtk.Clipboard clipboard = Gtk.Clipboard.get_for_display (Gdk.Display.get_default (), Gdk.SELECTION_CLIPBOARD);
 	public MainWindow (Gtk.Application application) {
 		GLib.Object (application: application,
 			icon_name: "com.github.keyilan.swatches",
 			resizable: false,
 			title: "Swatches",
-			height_request: 500,
-			width_request: 500,
 			border_width: 0
 		);
 		Granite.Widgets.Utils.set_theming_for_screen (
@@ -43,7 +45,19 @@ public class MainWindow : Gtk.Window {
 			Stylesheet.BODY,
 			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 		);
-		this.window_position = Gtk.WindowPosition.CENTER;
+		//this.destroy.connect ( Gtk.main_quit );
+		//this.delete_event.connect ( quitApplication );
+		if (settings.get_boolean("first-run")) {
+			this.set_position ( Gtk.WindowPosition.CENTER );
+			settings.set_boolean ( "first-run", false );
+			showrgb = settings.set_boolean("show-rgb",false);
+		} else {
+			showrgb = settings.get_boolean("show-rgb");
+			initialColor = settings.get_string("last-colour");
+			window_x = settings.get_int ("window-x");
+			window_y = settings.get_int ("window-y");
+			this.move (window_x, window_y);
+		}
 		Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
 	}
 	construct {
@@ -60,6 +74,10 @@ public class MainWindow : Gtk.Window {
 		grid.set_row_spacing(0);
 		grid.set_column_spacing(0);
 		Gtk.Switch rgbswitch = new Gtk.Switch ();
+		showrgb = settings.get_boolean("show-rgb");
+		if (showrgb == true) {
+			rgbswitch.activate();
+		}
 		Gtk.Label rgblabel = new Gtk.Label ("rgb");
 		Gtk.Label hexlabel = new Gtk.Label ("hex");
 		Gtk.Box innerleft = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -99,18 +117,17 @@ public class MainWindow : Gtk.Window {
 			rows[i].pack_start (grids[i], true, true, 0);
 			grid.attach(rows[i], 0, i, 1, 1);
 		}
-
 		rgbswitch.notify["active"].connect (() => {
 			string inputtext = input.get_text();
 			if (showrgb == true) {
 				inputtext = rgb2hex(inputtext);
 			}
-			stdout.printf (inputtext.to_string());
 			if (rgbswitch.active) {
 				showrgb = true;
+				settings.set_boolean("show-rgb",true);
 			} else {
 				showrgb = false;
-				stdout.printf (" "+inputtext.to_string());
+				settings.set_boolean("show-rgb",false);
 			}
 			input.set_text (inputtext+";");
 		});
@@ -167,6 +184,9 @@ public class MainWindow : Gtk.Window {
 						rows[i].get_style_context ().remove_class ("shadow");
 						rows[i].get_style_context ().remove_class ("preshadow");
 					}
+
+					//make sure we have the right setting
+					showrgb = settings.get_boolean("show-rgb");
 
 					// everything above the given colour
 					for (int i = positionkey - 1; i >= 0; i--) {
@@ -308,12 +328,15 @@ public class MainWindow : Gtk.Window {
 					if (r >= 0) {
 						rows[r].get_style_context().add_class("preshadow");
 					}
+					settings.set_string ("last-colour", shownvalue);
 				}
 			}
-
 		});
-		input.text = "3F51B5";
-		input.text = "#3F51B5";
+		initialColor = settings.get_string("last-colour");
+		if (initialColor!= null) {
+			input.text = initialColor;
+			input.text = initialColor+";";
+		}
 	}
 	public void button_clicked (Gtk.Button button) {
 		ApplyCSS({button}, @"*{font-weight:bold;}");
@@ -364,4 +387,12 @@ public class MainWindow : Gtk.Window {
 		else if (ones == 'e' || ones == 'E') {dec += 14;} else if (ones == 'f' || ones == 'F') {dec += 15;}
 		return dec;
 	}
+/*	private bool quitApplication () {
+		settings.set_string ("last-colour", originalColour);
+		this.get_position (out window_x, out window_y);
+		settings.set_int ("window-x", window_x);
+		settings.set_int ("window-y", window_y);
+		stdout.printf ("quit\n");
+		return false;
+	}*/
 }
