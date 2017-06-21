@@ -8,7 +8,7 @@
 		<summary>Is this the first time the software has been run?</summary>
 		<description>Is this the first time the software has been run?</description>
 	</key>
-	<key name ="last-color" type="s">
+	<key name ="last-colour" type="s">
 		<default>"3F51B5"</default>
 		<summary>The last colour entered by the user</summary>
 		<description>The last colour entered by the user</description>
