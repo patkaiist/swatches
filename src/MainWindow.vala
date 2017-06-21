@@ -18,7 +18,7 @@ PERFORMANCE OF THIS SOFTWARE.
 using Gtk;
 using Gdk;
 using Granite;
-using Gran	ite.Services;
+using Granite.Services;
 using Granite.Widgets;
 
 /*
