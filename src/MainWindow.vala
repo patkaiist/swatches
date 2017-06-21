@@ -18,8 +18,15 @@ PERFORMANCE OF THIS SOFTWARE.
 using Gtk;
 using Gdk;
 using Granite;
-using Granite.Services;
+using Gran	ite.Services;
 using Granite.Widgets;
+
+/*
+	stepsint = settings.get_int ("steps");
+	Gtk.Entry stepsinput = new Gtk.Entry();
+	stepsinput.set_text(stepsint.to_string());
+	innerrightinner.pack_start (stepsinput, true, true, 6);
+*/
 
 public class MainWindow : Gtk.Window {
 	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
