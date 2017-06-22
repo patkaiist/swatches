@@ -23,8 +23,8 @@ using Granite.Widgets;
 public class MainWindow : Gtk.Window {
 	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
 	private string hexValue = "000000";
-	private double steps = 23; // number of steps excluding the given colour
-	private int stepsint = 23;
+	private double steps = 15; // number of steps excluding the given colour
+	private int stepsint = 15;
 	private bool show_labels = true;
 	private string originalColour = "";
 	private string initialColor;
