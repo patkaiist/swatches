@@ -23,7 +23,7 @@ using Granite.Widgets;
 public class MainWindow : Gtk.Window {
 	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
 	private string hexValue = "000000";
-	private double steps = 16; // how many steps to display
+	private double steps = 16;
 	private int stepsint = 16;
 	private string originalColour = "";
 	private string initialColor;
@@ -44,8 +44,6 @@ public class MainWindow : Gtk.Window {
 			Stylesheet.BODY,
 			Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
 		);
-		//this.destroy.connect ( Gtk.main_quit );
-		//this.delete_event.connect ( quitApplication );
 		if (settings.get_boolean("first-run")) {
 			this.set_position ( Gtk.WindowPosition.CENTER );
 			settings.set_boolean ( "first-run", false );
@@ -62,9 +60,7 @@ public class MainWindow : Gtk.Window {
 	construct {
 		Gtk.Entry input = new Gtk.Entry();
 		string inputtext = input.get_text();
-
 		Gtk.MenuBar bar = new Gtk.MenuBar ();
-
 		Gtk.MenuItem item_display = new Gtk.MenuItem.with_label ("Display");
 		bar.add (item_display);
 		Gtk.Menu display_menu = new Gtk.Menu ();
@@ -92,7 +88,6 @@ public class MainWindow : Gtk.Window {
 			show_rgb = true;
 			input.set_text (inputtext+";");
 		});
-
 		Gtk.MenuItem item_luminance = new Gtk.MenuItem.with_label ("Luminance");
 		bar.add (item_luminance);
 		Gtk.Menu luminance_menu = new Gtk.Menu ();
@@ -120,9 +115,6 @@ public class MainWindow : Gtk.Window {
 			perceptual_luminance = true;
 			input.set_text (inputtext+";");
 		});
-
-		//stepsint = settings.get_int ("steps");
-
 		Gtk.Button[] buttons = new Gtk.Button[stepsint];
 		var rows = new Gtk.Box[stepsint];
 		var grids = new Gtk.Grid[stepsint];
@@ -140,14 +132,10 @@ public class MainWindow : Gtk.Window {
 		Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 		innerbox.pack_start (input, true, true, 0);
 		outerbox.pack_start (innerbox, true, true, 6);
-
 		parentgrid.attach(bar, 0, 0, 1, 1);
 		parentgrid.attach(outerbox, 0, 1, 1, 1);
 		parentgrid.attach(grid, 0, 2, 1, 1);
 		this.add (parentgrid);
-
-		//this.add (bar);
-
 		parentgrid.get_style_context ().add_class ("container");
 		input.set_placeholder_text("enter hex code");
 		input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
@@ -430,12 +418,4 @@ public class MainWindow : Gtk.Window {
 		else if (ones == 'e' || ones == 'E') {dec += 14;} else if (ones == 'f' || ones == 'F') {dec += 15;}
 		return dec;
 	}
-/*	private bool quitApplication () {
-		settings.set_string ("last-colour", originalColour);
-		this.get_position (out window_x, out window_y);
-		settings.set_int ("window-x", window_x);
-		settings.set_int ("window-y", window_y);
-		stdout.printf ("quit\n");
-		return false;
-	}*/
 }
