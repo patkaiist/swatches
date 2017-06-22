@@ -10,6 +10,7 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 * Quickly switch between RGB and hexadecimal colour values
 * Remembers your preference for hex or rgb between uses
 * Remembers the last colour you checked when reloading the app
+* Toggle relative luminance between perceptual or actual values
 
 ## Screenshots
 
@@ -42,5 +43,4 @@ sudo make install
 ````
 
 ## To do
-* User-controllable luminence normalisation
-* User-defined number of steps to show
+* User control over how many steps to show
