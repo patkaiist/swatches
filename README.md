@@ -14,8 +14,6 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 
 ## Screenshots
 
-![screenshot](/data/notifications.png?raw=true)
-
 ![screenshot](/data/screenshot.png?raw=true)
 
 ## Installation
