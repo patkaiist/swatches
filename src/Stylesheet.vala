@@ -48,5 +48,9 @@ namespace Stylesheet {
 			background-image: none;
 			border: 1px solid alpha (#000, 0.25);
 		}
+		GtkMenuBar {
+			background-color: #ffffff;
+			border: none;
+		}
 		""";
 }

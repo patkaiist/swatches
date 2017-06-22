@@ -37,8 +37,8 @@ public class MainWindow : Gtk.Window {
 	private string initialColor;
 	private bool showrgb;
 	private bool onChangeActivated = true;
-    private int window_x = 0;
-    private int window_y = 0;
+	private int window_x = 0;
+	private int window_y = 0;
 	public Gtk.Clipboard clipboard = Gtk.Clipboard.get_for_display (Gdk.Display.get_default (), Gdk.SELECTION_CLIPBOARD);
 	public MainWindow (Gtk.Application application) {
 		GLib.Object (application: application,
@@ -69,6 +69,40 @@ public class MainWindow : Gtk.Window {
 	}
 	construct {
 		Gtk.Entry input = new Gtk.Entry();
+		string inputtext = input.get_text();
+		Gtk.MenuBar bar = new Gtk.MenuBar ();
+		Gtk.MenuItem item_format = new Gtk.MenuItem.with_label ("Luminance");
+		bar.add (item_format);
+		Gtk.Menu format_menu = new Gtk.Menu ();
+		Gtk.RadioMenuItem item_lum_real = new Gtk.RadioMenuItem.with_label (null, "Actual");
+		unowned SList<Gtk.RadioMenuItem> group = item_lum_real.get_group ();
+		Gtk.RadioMenuItem item_lum_perc = new Gtk.RadioMenuItem.with_label (group, "Perceptual");
+
+		bool perceptual_luminance = settings.get_boolean("perceptual-luminance");
+		if (perceptual_luminance == true) {
+			item_lum_perc.set_active(true);
+		} else {
+			item_lum_real.set_active(true);
+		}
+
+		format_menu.add (item_lum_perc);
+		format_menu.add (item_lum_real);
+		item_format.set_submenu (format_menu);
+		item_lum_real.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("perceptual-luminance",false);
+			perceptual_luminance = false;
+			input.set_text (inputtext+";");
+		});
+		item_lum_perc.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("perceptual-luminance",true);
+			perceptual_luminance = true;
+			input.set_text (inputtext+";");
+		}); // kpr
+
+		//stepsint = settings.get_int ("steps");
+
 		Gtk.Button[] buttons = new Gtk.Button[stepsint];
 		var rows = new Gtk.Box[stepsint];
 		var grids = new Gtk.Grid[stepsint];
@@ -99,9 +133,13 @@ public class MainWindow : Gtk.Window {
 		outerbox.pack_start (innerleft, true, true, 6);
 		outerbox.pack_start (innerright, true, true, 6);
 
-		parentgrid.attach(outerbox, 0, 0, 1, 1);
-		parentgrid.attach(grid, 0, 1, 1, 1);
+		parentgrid.attach(bar, 0, 0, 1, 1);
+		parentgrid.attach(outerbox, 0, 1, 1, 1);
+		parentgrid.attach(grid, 0, 2, 1, 1);
 		this.add (parentgrid);
+
+		//this.add (bar);
+
 		parentgrid.get_style_context ().add_class ("container");
 		input.set_placeholder_text("enter hex code");
 		input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
@@ -125,7 +163,7 @@ public class MainWindow : Gtk.Window {
 			grid.attach(rows[i], 0, i, 1, 1);
 		}
 		rgbswitch.notify["active"].connect (() => {
-			string inputtext = input.get_text();
+			inputtext = input.get_text();
 			if (showrgb == true) {
 				inputtext = rgb2hex(inputtext);
 			}
@@ -164,9 +202,15 @@ public class MainWindow : Gtk.Window {
 					double greenval = hex2rgb(hexValue.substring (2, 2));
 					double blueval = hex2rgb(hexValue.substring (4, 2));
 					double luminancevalue = (double)((redval + blueval + greenval)/3);
-					double perceptual = (0.299*redval + 0.587*greenval + 0.114*blueval);
-					//double luminance = steps - Math.round((luminancevalue/256)*steps); // <-- actual luminance
-					double luminance = steps - Math.round((perceptual/256)*steps); // <-- percieved luminance. make togglable later
+
+					perceptual_luminance = settings.get_boolean("perceptual-luminance");
+					double luminance;
+					if (perceptual_luminance == true) {
+						double perceptual = (0.299*redval + 0.587*greenval + 0.114*blueval);
+						luminance = steps - Math.round((perceptual/256)*steps); // <-- percieved luminance. make togglable later
+					} else {
+						luminance = steps - Math.round((luminancevalue/256)*steps); // <-- actual luminance
+					}
 					int positionkey = (int)luminance;
 
 					// calculate bright steps
