@@ -17,7 +17,7 @@ PERFORMANCE OF THIS SOFTWARE.
 using Gtk;
 
 public class Swatches : Granite.Application {
-	//private Window window;
+	private Window window;
 	construct {
 		program_name = "Swatches";
 		exec_name = "com.github.keyilan.swatches";
@@ -36,8 +36,8 @@ public class Swatches : Granite.Application {
 			get_windows ().data.present ();
 			return;
 		}
-		var app_window = new MainWindow (this);
-		app_window.show_all ();
+		window = new MainWindow (this);
+		window.show_all ();
 	}
 	public static int main (string[] args) {
 		var app = new Swatches ();

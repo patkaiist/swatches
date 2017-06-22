@@ -20,14 +20,6 @@ using Gdk;
 using Granite;
 using Granite.Services;
 using Granite.Widgets;
-
-/*
-	stepsint = settings.get_int ("steps");
-	Gtk.Entry stepsinput = new Gtk.Entry();
-	stepsinput.set_text(stepsint.to_string());
-	innerrightinner.pack_start (stepsinput, true, true, 6);
-*/
-
 public class MainWindow : Gtk.Window {
 	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
 	private string hexValue = "000000";
@@ -70,24 +62,52 @@ public class MainWindow : Gtk.Window {
 	construct {
 		Gtk.Entry input = new Gtk.Entry();
 		string inputtext = input.get_text();
-		Gtk.MenuBar bar = new Gtk.MenuBar ();
-		Gtk.MenuItem item_format = new Gtk.MenuItem.with_label ("Luminance");
-		bar.add (item_format);
-		Gtk.Menu format_menu = new Gtk.Menu ();
-		Gtk.RadioMenuItem item_lum_real = new Gtk.RadioMenuItem.with_label (null, "Actual");
-		unowned SList<Gtk.RadioMenuItem> group = item_lum_real.get_group ();
-		Gtk.RadioMenuItem item_lum_perc = new Gtk.RadioMenuItem.with_label (group, "Perceptual");
 
+		Gtk.MenuBar bar = new Gtk.MenuBar ();
+
+		Gtk.MenuItem item_display = new Gtk.MenuItem.with_label ("Display");
+		bar.add (item_display);
+		Gtk.Menu display_menu = new Gtk.Menu ();
+		Gtk.RadioMenuItem item_disp_hex = new Gtk.RadioMenuItem.with_label (null, "Hexadecimal");
+		unowned SList<Gtk.RadioMenuItem> rgbgroup = item_disp_hex.get_group ();
+		Gtk.RadioMenuItem item_disp_rgb = new Gtk.RadioMenuItem.with_label (rgbgroup, "RGB");
+		bool show_rgb = settings.get_boolean("show-rgb");
+		if (show_rgb == true) {
+			item_disp_rgb.set_active(true);
+		} else {
+			item_disp_hex.set_active(true);
+		}
+		display_menu.add (item_disp_hex);
+		display_menu.add (item_disp_rgb);
+		item_display.set_submenu (display_menu);
+		item_disp_hex.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("show-rgb",false);
+			show_rgb = false;
+			input.set_text (inputtext+";");
+		});
+		item_disp_rgb.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("show-rgb",true);
+			show_rgb = true;
+			input.set_text (inputtext+";");
+		});
+
+		Gtk.MenuItem item_luminance = new Gtk.MenuItem.with_label ("Luminance");
+		bar.add (item_luminance);
+		Gtk.Menu luminance_menu = new Gtk.Menu ();
+		Gtk.RadioMenuItem item_lum_real = new Gtk.RadioMenuItem.with_label (null, "Actual");
+		unowned SList<Gtk.RadioMenuItem> lumgroup = item_lum_real.get_group ();
+		Gtk.RadioMenuItem item_lum_perc = new Gtk.RadioMenuItem.with_label (lumgroup, "Perceptual");
 		bool perceptual_luminance = settings.get_boolean("perceptual-luminance");
 		if (perceptual_luminance == true) {
 			item_lum_perc.set_active(true);
 		} else {
 			item_lum_real.set_active(true);
 		}
-
-		format_menu.add (item_lum_perc);
-		format_menu.add (item_lum_real);
-		item_format.set_submenu (format_menu);
+		luminance_menu.add (item_lum_perc);
+		luminance_menu.add (item_lum_real);
+		item_luminance.set_submenu (luminance_menu);
 		item_lum_real.activate.connect (() => {
 			inputtext = input.get_text();
 			settings.set_boolean("perceptual-luminance",false);
@@ -99,7 +119,7 @@ public class MainWindow : Gtk.Window {
 			settings.set_boolean("perceptual-luminance",true);
 			perceptual_luminance = true;
 			input.set_text (inputtext+";");
-		}); // kpr
+		});
 
 		//stepsint = settings.get_int ("steps");
 
@@ -114,24 +134,12 @@ public class MainWindow : Gtk.Window {
 		parentgrid.set_row_spacing(0);
 		grid.set_row_spacing(0);
 		grid.set_column_spacing(0);
-		Gtk.Switch rgbswitch = new Gtk.Switch ();
-		showrgb = settings.get_boolean("show-rgb");
-		if (showrgb == true) {
-			rgbswitch.activate();
-		}
 		Gtk.Label rgblabel = new Gtk.Label ("rgb");
 		Gtk.Label hexlabel = new Gtk.Label ("hex");
-		Gtk.Box innerleft = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-		Gtk.Box innerright = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-		Gtk.Box innerrightinner = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+		Gtk.Box innerbox = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
 		Gtk.Box outerbox = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-		innerleft.pack_start (input, true, true, 6);
-		innerright.pack_start (innerrightinner, true, true, 6);
-		innerrightinner.pack_start (hexlabel, true, true, 6);
-		innerrightinner.pack_start (rgbswitch, true, true, 6);
-		innerrightinner.pack_start (rgblabel, true, true, 6);
-		outerbox.pack_start (innerleft, true, true, 6);
-		outerbox.pack_start (innerright, true, true, 6);
+		innerbox.pack_start (input, true, true, 0);
+		outerbox.pack_start (innerbox, true, true, 6);
 
 		parentgrid.attach(bar, 0, 0, 1, 1);
 		parentgrid.attach(outerbox, 0, 1, 1, 1);
@@ -148,7 +156,6 @@ public class MainWindow : Gtk.Window {
 				input.set_text ("");
 			}
 		});
-
 		for (int i = 0; i < stepsint; i++) {
 			rows[i] = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 			grids[i] = new Gtk.Grid();
@@ -162,21 +169,6 @@ public class MainWindow : Gtk.Window {
 			rows[i].pack_start (grids[i], true, true, 0);
 			grid.attach(rows[i], 0, i, 1, 1);
 		}
-		rgbswitch.notify["active"].connect (() => {
-			inputtext = input.get_text();
-			if (showrgb == true) {
-				inputtext = rgb2hex(inputtext);
-			}
-			if (rgbswitch.active) {
-				showrgb = true;
-				settings.set_boolean("show-rgb",true);
-			} else {
-				showrgb = false;
-				settings.set_boolean("show-rgb",false);
-			}
-			input.set_text (inputtext+";");
-		});
-
 		input.changed.connect (() => {
 			if (onChangeActivated == true) {
 				hexValue = input.get_text();
