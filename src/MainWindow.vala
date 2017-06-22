@@ -23,8 +23,9 @@ using Granite.Widgets;
 public class MainWindow : Gtk.Window {
 	private GLib.Settings settings = new GLib.Settings ( "com.github.keyilan.swatches" );
 	private string hexValue = "000000";
-	private double steps = 16;
-	private int stepsint = 16;
+	private double steps = 23; // number of steps excluding the given colour
+	private int stepsint = 23;
+	private bool show_labels = true;
 	private string originalColour = "";
 	private string initialColor;
 	private bool showrgb;
@@ -61,9 +62,45 @@ public class MainWindow : Gtk.Window {
 		Gtk.Entry input = new Gtk.Entry();
 		string inputtext = input.get_text();
 		Gtk.MenuBar bar = new Gtk.MenuBar ();
-		Gtk.MenuItem item_display = new Gtk.MenuItem.with_label ("Display");
-		bar.add (item_display);
-		Gtk.Menu display_menu = new Gtk.Menu ();
+
+		Gtk.MenuItem item_labelhide = new Gtk.MenuItem.with_label ("Visibility");
+		Gtk.Menu labelhide_menu = new Gtk.Menu ();
+		Gtk.RadioMenuItem item_showlabels = new Gtk.RadioMenuItem.with_label (null, "Visible");
+		unowned SList<Gtk.RadioMenuItem> showhidegroup = item_showlabels.get_group ();
+		Gtk.RadioMenuItem item_hidelabels = new Gtk.RadioMenuItem.with_label (showhidegroup, "Hidden");
+		labelhide_menu.add (item_showlabels);
+		labelhide_menu.add (item_hidelabels);
+		item_labelhide.set_submenu (labelhide_menu);
+		show_labels = settings.get_boolean("show-labels");
+		if (show_labels == true) {
+			item_showlabels.set_active(true);
+		} else {
+			item_hidelabels.set_active(true);
+		}
+		item_hidelabels.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("show-labels",false);
+			show_labels = false;
+			input.set_text (inputtext+";");
+		});
+		item_showlabels.activate.connect (() => {
+			inputtext = input.get_text();
+			settings.set_boolean("show-labels",true);
+			show_labels = true;
+			input.set_text (inputtext+";");
+		});
+
+		Gtk.MenuItem item_options = new Gtk.MenuItem.with_label ("Labels");
+		bar.add (item_options);
+		Gtk.Menu options_menu = new Gtk.Menu ();
+		item_options.set_submenu (options_menu);
+
+		Gtk.MenuItem item_values = new Gtk.MenuItem.with_label ("Values");
+		options_menu.add (item_values);
+		options_menu.add (item_labelhide);
+
+		labelhide_menu.add (item_values);
+		Gtk.Menu values_menu = new Gtk.Menu ();
 		Gtk.RadioMenuItem item_disp_hex = new Gtk.RadioMenuItem.with_label (null, "Hexadecimal");
 		unowned SList<Gtk.RadioMenuItem> rgbgroup = item_disp_hex.get_group ();
 		Gtk.RadioMenuItem item_disp_rgb = new Gtk.RadioMenuItem.with_label (rgbgroup, "RGB");
@@ -73,9 +110,9 @@ public class MainWindow : Gtk.Window {
 		} else {
 			item_disp_hex.set_active(true);
 		}
-		display_menu.add (item_disp_hex);
-		display_menu.add (item_disp_rgb);
-		item_display.set_submenu (display_menu);
+		values_menu.add (item_disp_hex);
+		values_menu.add (item_disp_rgb);
+		item_values.set_submenu (values_menu);
 		item_disp_hex.activate.connect (() => {
 			inputtext = input.get_text();
 			settings.set_boolean("show-rgb",false);
@@ -144,7 +181,7 @@ public class MainWindow : Gtk.Window {
 				input.set_text ("");
 			}
 		});
-		for (int i = 0; i < stepsint; i++) {
+		for (int i = 0; i <= stepsint; i++) {
 			rows[i] = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
 			grids[i] = new Gtk.Grid();
 			grids[i].set_column_homogeneous(true);
@@ -209,7 +246,7 @@ public class MainWindow : Gtk.Window {
 					int o = 1;
 
 					// clear all labels
-					for (int i = 0; i < stepsint; i++) {
+					for (int i = 0; i <= stepsint; i++) {
 						buttons[i].set_label("");
 						brights[i].set_label("");
 						rows[i].get_style_context ().remove_class ("shadow");
@@ -241,12 +278,16 @@ public class MainWindow : Gtk.Window {
 						buttons[i].set_label(shownvalue);
 						ApplyCSS({buttons[i]}, @"*{background-color:"+shownvalue+";}");
 						ApplyCSS({buttons[i]}, @"*{font-weight:normal;}");
-						if (i > steps/2) {
-							ApplyCSS({buttons[i]}, @"*{color:#fafafa;}");
+						if (show_labels == false) {
+							ApplyCSS({buttons[i]}, @"*{color:rgba(0,0,0,0);}");
+							ApplyCSS({buttons[i]}, @"*{text-shadow:none;}");
 						} else {
-							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
+							if (i > steps/2) {
+								ApplyCSS({buttons[i]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+							} else {
+								ApplyCSS({buttons[i]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+							}
 						}
-
 						// brights
 						double brightred = Math.round(redval + (brightuppersteps * o));
 						double brightgreen = Math.round(greenval + (brightuppersteps * o));
@@ -264,18 +305,21 @@ public class MainWindow : Gtk.Window {
 						brights[i].set_label(shownvalue);
 						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
 						ApplyCSS({brights[i]}, @"*{font-weight:normal;}");
-						if (i > steps/2) {
-							ApplyCSS({brights[i]}, @"*{color:#fafafa;}");
+						if (show_labels == false) {
+							ApplyCSS({brights[i]}, @"*{color:rgba(0,0,0,0);}");
+							ApplyCSS({brights[i]}, @"*{text-shadow:none;}");
 						} else {
-							ApplyCSS({brights[i]}, @"*{color:#222222;}");
+							if (i > steps/2) {
+								ApplyCSS({brights[i]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+							} else {
+								ApplyCSS({brights[i]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+							}
 						}
 						o++;
 					}
-
 					o = 1; // reset
-
 					// everything below the given colour
-					for (int i = positionkey + 1; i < stepsint; i++) {
+					for (int i = positionkey + 1; i <= stepsint; i++) {
 						// regular
 						double redstep = Math.round(redval / (steps - positionkey));
 						double newred = Math.round(redval - (redstep * o));
@@ -303,12 +347,16 @@ public class MainWindow : Gtk.Window {
 						buttons[i].set_label(shownvalue);
 						ApplyCSS({buttons[i]}, @"*{background-color:"+thishex+";}");
 						ApplyCSS({buttons[i]}, @"*{font-weight:normal;}");
-						if (i > steps/2) {
-							ApplyCSS({buttons[i]}, @"*{color:#fafafa;}");
+						if (show_labels == false) {
+							ApplyCSS({buttons[i]}, @"*{color:rgba(0,0,0,0);}");
+							ApplyCSS({buttons[i]}, @"*{text-shadow:none;}");
 						} else {
-							ApplyCSS({buttons[i]}, @"*{color:#222222;}");
+							if (i > steps/2) {
+								ApplyCSS({buttons[i]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+							} else {
+								ApplyCSS({buttons[i]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+							}
 						}
-
 						// brights
 						double brightred = Math.round(redval - (brightlowersteps * o));
 						double brightgreen = Math.round(greenval - (brightlowersteps * o));
@@ -326,22 +374,34 @@ public class MainWindow : Gtk.Window {
 						brights[i].set_label(shownvalue);
 						ApplyCSS({brights[i]}, @"*{background-color:"+brighthex+";}");
 						ApplyCSS({brights[i]}, @"*{font-weight:normal;}");
-						if (i > steps/2) {
-							ApplyCSS({brights[i]}, @"*{color:#fafafa;}");
+						if (show_labels == false) {
+							ApplyCSS({brights[i]}, @"*{color:rgba(0,0,0,0);}");
+							ApplyCSS({brights[i]}, @"*{text-shadow:none;}");
 						} else {
-								ApplyCSS({brights[i]}, @"*{color:#222222;}");
+							if (i > steps/2) {
+								ApplyCSS({brights[i]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+							} else {
+								ApplyCSS({brights[i]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+							}
 						}
 						o++;
 					}
 					// set for the given colour's buttons
 					ApplyCSS({buttons[positionkey]}, @"*{background-color:"+original+";}");
 					ApplyCSS({brights[positionkey]}, @"*{background-color:"+original+";}");
-					if (positionkey >= steps/2) {
-						ApplyCSS({buttons[positionkey]}, @"*{color:#fafafa;}");
-						ApplyCSS({brights[positionkey]}, @"*{color:#fafafa;}");
+					if (show_labels == false) {
+						ApplyCSS({buttons[positionkey]}, @"*{color:rgba(0,0,0,0);}");
+						ApplyCSS({buttons[positionkey]}, @"*{text-shadow:none;}");
+						ApplyCSS({brights[positionkey]}, @"*{color:rgba(0,0,0,0);}");
+						ApplyCSS({brights[positionkey]}, @"*{text-shadow:none;}");
 					} else {
-						ApplyCSS({buttons[positionkey]}, @"*{color:#222222;}");
-						ApplyCSS({brights[positionkey]}, @"*{color:#222222;}");
+						if (positionkey >= steps/2) {
+							ApplyCSS({buttons[positionkey]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+							ApplyCSS({brights[positionkey]}, @"*{color:rgba(255,255,255,0.75); text-shadow: 0 -1px 0 rgba(0,0,0,0.25);}");
+						} else {
+							ApplyCSS({buttons[positionkey]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+							ApplyCSS({brights[positionkey]}, @"*{color:rgba(0,0,0,0.85); text-shadow: 0 1px 0 rgba(255,255,255,0.4);}");
+						}
 					}
 					string shownvalue;
 					if (showrgb == false) {

@@ -13,6 +13,11 @@
 		<summary>Show values in RGB instead of hex</summary>
 		<description>Show values in RGB instead of hex</description>
 	</key>
+	<key name ="show-labels" type="b">
+		<default>true</default>
+		<summary>Show the colour codes</summary>
+		<description>Show the colour codes</description>
+	</key>
 	<key name ="perceptual-luminance" type="b">
 		<default>true</default>
 		<summary>Normalise the luminance</summary>

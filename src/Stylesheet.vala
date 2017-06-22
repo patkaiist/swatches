@@ -21,10 +21,8 @@ namespace Stylesheet {
 			background: #e6e6e6;
 			border-radius: 0px;
 			border: none;
-			text-shadow: none;
 			box-shadow: none;
-			padding: 8px 0 8px 0;
-			text-shadow: 0 1px 0 rgba(255,255,255,0.25), 0 -1px 0 rgba(0,0,0,0.125);
+			padding: 5px 0 5px 0;
 		}
 		.container GtkGrid {
 			background-color: #ffffff;
