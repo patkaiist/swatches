@@ -1,4 +1,4 @@
-# Swatches
+# Swatches [(中文)](https://github.com/keyilan/swatches/blob/master/README_zh.md)
 
 Swatches is a colour palette utility for getting variations.
 
@@ -12,7 +12,6 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 * Remembers the last colour you checked when reloading the app
 * Toggle relative luminance adjustment
 * Toggle visibility of labels
-* 包括中文本地化（简体和繁體）
 
 ## Screenshots
 
