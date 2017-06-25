@@ -62,7 +62,7 @@ msgstr "直观"
 
 #: src/MainWindow.vala:176
 msgid "enter color code"
-msgstr ""
+msgstr "输入颜色代码"
 
 #: src/MainWindow.vala:439
 msgid "copied to clipboard"
