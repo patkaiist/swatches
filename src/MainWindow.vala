@@ -37,7 +37,7 @@ public class MainWindow : Gtk.Window {
 		GLib.Object (application: application,
 			icon_name: "com.github.keyilan.swatches",
 			resizable: false,
-			title: "Swatches",
+			title: _("Swatches"),
 			border_width: 0
 		);
 		Granite.Widgets.Utils.set_theming_for_screen (
@@ -62,11 +62,11 @@ public class MainWindow : Gtk.Window {
 		Gtk.Entry input = new Gtk.Entry();
 		string inputtext = input.get_text();
 		Gtk.MenuBar bar = new Gtk.MenuBar ();
-		Gtk.MenuItem item_labelhide = new Gtk.MenuItem.with_label ("Visibility");
+		Gtk.MenuItem item_labelhide = new Gtk.MenuItem.with_label (_("Visibility"));
 		Gtk.Menu labelhide_menu = new Gtk.Menu ();
-		Gtk.RadioMenuItem item_showlabels = new Gtk.RadioMenuItem.with_label (null, "Visible");
+		Gtk.RadioMenuItem item_showlabels = new Gtk.RadioMenuItem.with_label (null, _("Visible"));
 		unowned SList<Gtk.RadioMenuItem> showhidegroup = item_showlabels.get_group ();
-		Gtk.RadioMenuItem item_hidelabels = new Gtk.RadioMenuItem.with_label (showhidegroup, "Hidden");
+		Gtk.RadioMenuItem item_hidelabels = new Gtk.RadioMenuItem.with_label (showhidegroup, _("Hidden"));
 		labelhide_menu.add (item_showlabels);
 		labelhide_menu.add (item_hidelabels);
 		item_labelhide.set_submenu (labelhide_menu);
@@ -89,20 +89,20 @@ public class MainWindow : Gtk.Window {
 			input.set_text (inputtext+";");
 		});
 
-		Gtk.MenuItem item_options = new Gtk.MenuItem.with_label ("Labels");
+		Gtk.MenuItem item_options = new Gtk.MenuItem.with_label (_("Labels"));
 		bar.add (item_options);
 		Gtk.Menu options_menu = new Gtk.Menu ();
 		item_options.set_submenu (options_menu);
 
-		Gtk.MenuItem item_values = new Gtk.MenuItem.with_label ("Values");
+		Gtk.MenuItem item_values = new Gtk.MenuItem.with_label (_("Values"));
 		options_menu.add (item_values);
 		options_menu.add (item_labelhide);
 
 		labelhide_menu.add (item_values);
 		Gtk.Menu values_menu = new Gtk.Menu ();
-		Gtk.RadioMenuItem item_disp_hex = new Gtk.RadioMenuItem.with_label (null, "Hexadecimal");
+		Gtk.RadioMenuItem item_disp_hex = new Gtk.RadioMenuItem.with_label (null, _("Hexadecimal"));
 		unowned SList<Gtk.RadioMenuItem> rgbgroup = item_disp_hex.get_group ();
-		Gtk.RadioMenuItem item_disp_rgb = new Gtk.RadioMenuItem.with_label (rgbgroup, "RGB");
+		Gtk.RadioMenuItem item_disp_rgb = new Gtk.RadioMenuItem.with_label (rgbgroup, _("RGB"));
 		bool show_rgb = settings.get_boolean("show-rgb");
 		if (show_rgb == true) {
 			item_disp_rgb.set_active(true);
@@ -124,12 +124,12 @@ public class MainWindow : Gtk.Window {
 			show_rgb = true;
 			input.set_text (inputtext+";");
 		});
-		Gtk.MenuItem item_luminance = new Gtk.MenuItem.with_label ("Luminance");
+		Gtk.MenuItem item_luminance = new Gtk.MenuItem.with_label (_("Luminance"));
 		bar.add (item_luminance);
 		Gtk.Menu luminance_menu = new Gtk.Menu ();
-		Gtk.RadioMenuItem item_lum_real = new Gtk.RadioMenuItem.with_label (null, "Actual");
+		Gtk.RadioMenuItem item_lum_real = new Gtk.RadioMenuItem.with_label (null, _("Actual"));
 		unowned SList<Gtk.RadioMenuItem> lumgroup = item_lum_real.get_group ();
-		Gtk.RadioMenuItem item_lum_perc = new Gtk.RadioMenuItem.with_label (lumgroup, "Perceptual");
+		Gtk.RadioMenuItem item_lum_perc = new Gtk.RadioMenuItem.with_label (lumgroup, _("Perceptual"));
 		bool perceptual_luminance = settings.get_boolean("perceptual-luminance");
 		if (perceptual_luminance == true) {
 			item_lum_perc.set_active(true);
@@ -173,7 +173,7 @@ public class MainWindow : Gtk.Window {
 		parentgrid.attach(grid, 0, 2, 1, 1);
 		this.add (parentgrid);
 		parentgrid.get_style_context ().add_class ("container");
-		input.set_placeholder_text("enter hex code");
+		input.set_placeholder_text(_("enter color code"));
 		input.set_icon_from_icon_name (Gtk.EntryIconPosition.SECONDARY, "edit-clear");
 		input.icon_press.connect ((pos, event) => {
 			if (pos == Gtk.EntryIconPosition.SECONDARY) {

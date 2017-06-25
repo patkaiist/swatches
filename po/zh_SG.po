@@ -14,51 +14,56 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: ../src/MainWindow.vala:40
+#: src/MainWindow.vala:40
 msgid "Swatches"
 msgstr "彩色样片"
 
-#: ../src/MainWindow.vala:65
+#: src/MainWindow.vala:65
 msgid "Visibility"
 msgstr "能见度"
 
-#: ../src/MainWindow.vala:67
+#: src/MainWindow.vala:67
 msgid "Visible"
 msgstr "看得见"
 
-#: ../src/MainWindow.vala:69
+#: src/MainWindow.vala:69
 msgid "Hidden"
 msgstr "看不见"
 
-#: ../src/MainWindow.vala:92
+#: src/MainWindow.vala:92
 msgid "Labels"
 msgstr "签条"
 
-#: ../src/MainWindow.vala:97
+#: src/MainWindow.vala:97
 msgid "Values"
 msgstr "数值"
 
-#: ../src/MainWindow.vala:103
+#: src/MainWindow.vala:103
 msgid "Hexadecimal"
 msgstr "十六进制"
 
-#: ../src/MainWindow.vala:105
+#: src/MainWindow.vala:105
 msgid "RGB"
 msgstr "RGB"
 
-#: ../src/MainWindow.vala:127
+#: src/MainWindow.vala:127
 msgid "Luminance"
 msgstr "光亮度"
 
-#: ../src/MainWindow.vala:130
+#: src/MainWindow.vala:130
 msgid "Actual"
 msgstr "现实"
 
-#: ../src/MainWindow.vala:133
+#: src/MainWindow.vala:133
 msgid "Perceptual"
 msgstr "直观"
 
-#: ../src/MainWindow.vala:439
+#: src/MainWindow.vala:176
+msgid "enter color code"
+msgstr ""
+
+#: src/MainWindow.vala:439
 msgid "copied to clipboard"
 msgstr "复制到剪贴板"
