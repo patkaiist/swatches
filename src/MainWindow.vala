@@ -62,7 +62,6 @@ public class MainWindow : Gtk.Window {
 		Gtk.Entry input = new Gtk.Entry();
 		string inputtext = input.get_text();
 		Gtk.MenuBar bar = new Gtk.MenuBar ();
-
 		Gtk.MenuItem item_labelhide = new Gtk.MenuItem.with_label ("Visibility");
 		Gtk.Menu labelhide_menu = new Gtk.Menu ();
 		Gtk.RadioMenuItem item_showlabels = new Gtk.RadioMenuItem.with_label (null, "Visible");
