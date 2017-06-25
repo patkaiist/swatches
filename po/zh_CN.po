@@ -18,7 +18,7 @@ msgstr ""
 
 #: src/MainWindow.vala:40
 msgid "Swatches"
-msgstr "彩色样片"
+msgstr "色板"
 
 #: src/MainWindow.vala:65
 msgid "Visibility"

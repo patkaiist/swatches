@@ -18,31 +18,31 @@ msgstr ""
 
 #: src/MainWindow.vala:40
 msgid "Swatches"
-msgstr "色板"
+msgstr "Swatches"
 
 #: src/MainWindow.vala:65
 msgid "Visibility"
-msgstr "能見度"
+msgstr "시정"
 
 #: src/MainWindow.vala:67
 msgid "Visible"
-msgstr "看得見"
+msgstr "보이다"
 
 #: src/MainWindow.vala:69
 msgid "Hidden"
-msgstr "看不見"
+msgstr "감추다"
 
 #: src/MainWindow.vala:92
 msgid "Labels"
-msgstr "籤條"
+msgstr "상표"
 
 #: src/MainWindow.vala:97
 msgid "Values"
-msgstr "數值"
+msgstr "값을 표시하다"
 
 #: src/MainWindow.vala:103
 msgid "Hexadecimal"
-msgstr "十六进制"
+msgstr "16 진수"
 
 #: src/MainWindow.vala:105
 msgid "RGB"
@@ -50,20 +50,20 @@ msgstr "RGB"
 
 #: src/MainWindow.vala:127
 msgid "Luminance"
-msgstr "光亮度"
+msgstr "휘도"
 
 #: src/MainWindow.vala:130
 msgid "Actual"
-msgstr "現實"
+msgstr "실제 휘도"
 
 #: src/MainWindow.vala:133
 msgid "Perceptual"
-msgstr "直觀"
+msgstr "감지 된 휘도"
 
 #: src/MainWindow.vala:176
 msgid "enter color code"
-msgstr "輸入顏色代碼"
+msgstr "컬러 코드 입력하기"
 
 #: src/MainWindow.vala:439
 msgid "copied to clipboard"
-msgstr "複製到剪貼板"
+msgstr "클립 보드에 복사 됨"
