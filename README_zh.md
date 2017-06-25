@@ -2,6 +2,8 @@
 
 色板（Swatches）是选颜色工具。输入十六进制或 RGB（红绿蓝）的颜色代码，彩色样片返回许多浓淡。
 
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.keyilan.swatches)﻿
+
 ## 功能
 
 * 一键复制
