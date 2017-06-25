@@ -6,7 +6,7 @@
 	<name>Swatches</name>
 	<summary>Colour variation tool</summary>
 	<description>
-		<p>Swatches lets you quickly grab variations of any hexadecimal colour you enter. Copy any shade to the clipboard with the click of a button.</p>
+		<p>Swatches lets you quickly grab variations of any hexadecimal or RGB colour you enter, and then quickly copy any shade to the clipboard with the click of a button.</p>
 	</description>
 	<provides>
 		<binary>com.github.keyilan.swatches</binary>
