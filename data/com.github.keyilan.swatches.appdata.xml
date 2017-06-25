@@ -9,7 +9,7 @@
 		<p>Swatches lets you quickly grab variations of any hexadecimal colour you enter. Copy any shade to the clipboard with the click of a button.</p>
 	</description>
 	<provides>
-		<binary>com.github.keyilan.shibu</binary>
+		<binary>com.github.keyilan.swatches</binary>
 	</provides>
 	<screenshots>
 		<screenshot type="default">
