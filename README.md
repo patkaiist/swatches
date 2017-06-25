@@ -1,4 +1,6 @@
-# Swatches [(中文)](https://github.com/keyilan/swatches/blob/master/README_zh.md)
+# Swatches
+
+[(点击这里阅读中文版本)](https://github.com/keyilan/swatches/blob/master/README_zh.md)
 
 Swatches is a colour palette utility for getting variations.
 
