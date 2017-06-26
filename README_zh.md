@@ -16,7 +16,7 @@
 
 ## 截图
 
-![截图](/data/screenshot.png?raw=true)
+![截图](/data/screenshot_zh.png?raw=true)
 
 ## 安装
 
