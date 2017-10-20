@@ -2,6 +2,7 @@
 Name=Swatches
 GenericName=com.github.keyilan.swatches
 Comment=Colour variation helper
+Comment[lt]=Spalvų variantų pagelbiklis
 Categories=Development;Graphics;
 Exec=com.github.keyilan.swatches
 Icon=com.github.keyilan.swatches
@@ -15,3 +16,4 @@ Actions=About;
 [Desktop Action About]
 Exec=Swatches --about
 Name=About Swatches
+Name[lt]=Apie Swatches

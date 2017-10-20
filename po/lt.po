@@ -1,0 +1,69 @@
+# Swatches
+# 柯禕藍 <yhilan.ko@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.keyilan.swatches\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-18 22:43+0300\n"
+"PO-Revision-Date: 2017-10-18 22:46+0300\n"
+"Language-Team: Language\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: Moo\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: lt\n"
+
+#: src/MainWindow.vala:40
+msgid "Swatches"
+msgstr "Swatches"
+
+#: src/MainWindow.vala:65
+msgid "Visibility"
+msgstr "Matomumas"
+
+#: src/MainWindow.vala:67
+msgid "Visible"
+msgstr "Matoma"
+
+#: src/MainWindow.vala:69
+msgid "Hidden"
+msgstr "Paslėpta"
+
+#: src/MainWindow.vala:92
+msgid "Labels"
+msgstr "Etiketės"
+
+#: src/MainWindow.vala:97
+msgid "Values"
+msgstr "Reikšmės"
+
+#: src/MainWindow.vala:103
+msgid "Hexadecimal"
+msgstr "Šešioliktainės"
+
+#: src/MainWindow.vala:105
+msgid "RGB"
+msgstr "RGB"
+
+#: src/MainWindow.vala:127
+msgid "Luminance"
+msgstr "Šviesis"
+
+#: src/MainWindow.vala:130
+msgid "Actual"
+msgstr "Faktinis"
+
+#: src/MainWindow.vala:133
+msgid "Perceptual"
+msgstr "Suvokiamas"
+
+#: src/MainWindow.vala:176
+msgid "enter color code"
+msgstr "įveskite spalvos kodą"
+
+#: src/MainWindow.vala:439
+msgid "copied to clipboard"
+msgstr "nukopijuota į iškarpinę"
