@@ -21,6 +21,11 @@ To use Swatches, type or paste a hexadecimal colour code into the text entry, wi
 
 ![screenshot](/data/screenshot.png?raw=true)
 
+## Localisations
+Thank you to [welaq](https://github.com/welaq) for the Lithuanian localisation and to [Marco Carrizales](https://github.com/tamoxin) for translating the app into Spanish. I'm grateful for their contributions.
+
+If you'd like to localise the app into other languages, just submit a pull request and I'll be happy to accept it into the master.
+
 ## Installation
 
 First, make sure you've instlled the elementary OS SDK
