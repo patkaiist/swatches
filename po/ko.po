@@ -1,5 +1,6 @@
 # Swatches
 # 柯禕藍 <yhilan.ko@gmail.com>
+# Kim In Seop <opnayn@gmail.com>
 #
 #, fuzzy
 msgid ""
@@ -8,13 +9,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-25 00:00-+1100\n"
 "PO-Revision-Date: 2017-06-25 00:00-+1100\n"
-"Last-Translator: 柯禕藍 <yhilan.ko@gmail.com>\n"
-"Language-Team: Chinese\n"
-"Language: zh\n"
+"Last-Translator: Kim In Seop <opnayn@gmail.com>\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/MainWindow.vala:40
 msgid "Swatches"
@@ -22,23 +23,23 @@ msgstr "Swatches"
 
 #: src/MainWindow.vala:65
 msgid "Visibility"
-msgstr "시정"
+msgstr "보이기"
 
 #: src/MainWindow.vala:67
 msgid "Visible"
-msgstr "보이다"
+msgstr "보이기"
 
 #: src/MainWindow.vala:69
 msgid "Hidden"
-msgstr "감추다"
+msgstr "숨기기"
 
 #: src/MainWindow.vala:92
 msgid "Labels"
-msgstr "상표"
+msgstr "레이블"
 
 #: src/MainWindow.vala:97
 msgid "Values"
-msgstr "값을 표시하다"
+msgstr "값 형식"
 
 #: src/MainWindow.vala:103
 msgid "Hexadecimal"
@@ -62,8 +63,8 @@ msgstr "감지 된 휘도"
 
 #: src/MainWindow.vala:176
 msgid "enter color code"
-msgstr "컬러 코드 입력하기"
+msgstr "색상 코드 입력"
 
 #: src/MainWindow.vala:439
 msgid "copied to clipboard"
-msgstr "클립 보드에 복사 됨"
+msgstr "클립 보드에 복사되었습니다."
