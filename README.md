@@ -1,4 +1,5 @@
-# Swatches
+<img align="left" width="64" height="64" src="data/icons/64/com.github.keyilan.swatches.svg">
+<h1 class="rich-diff-level-zero">Swatches</h1>
 
 [(点击这里阅读中文版本)](https://github.com/keyilan/swatches/blob/master/README_zh.md)
 
